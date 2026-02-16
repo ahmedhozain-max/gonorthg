@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقرير تقييم الفيزا - {{ client_name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #f8f9fa; color: #2d3436; }
+        
+        :root {
+            --score-color: {% if score < 40 %} #ff4757 {% elif score < 65 %} #ffa502 {% else %} #2ed573 {% endif %};
+        }
+
+        .result-container { max-width: 1000px; margin: 40px auto; }
+        
+        .main-header-card {
+            background: linear-gradient(135deg, #2d3436 0%, #000000 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        /* تمييز اسم العميل */
+        .client-welcome {
+            font-size: 1.1rem;
+            color: #00d2ff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .score-badge {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            border: 8px solid var(--score-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .score-number { font-size: 2.8rem; font-weight: 800; line-height: 1; }
+        .score-label { font-size: 0.8rem; opacity: 0.8; }
+
+        .status-pill {
+            background: var(--score-color);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            height: 100%;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: #f1f2f6;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0d6efd;
+            margin-bottom: 15px;
+        }
+
+        .country-tag {
+            background: #e3f2fd;
+            color: #0d47a1;
+            padding: 5px 12px;
+            border-radius: 6px;
+            display: inline-block;
+            margin: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .list-custom li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+            display: flex;
+            align-items: start;
+        }
+
+        .list-custom li:last-child { border-bottom: none; }
+        .list-custom i { margin-left: 8px; margin-top: 5px; }
+
+        .alert-custom {
+            border-right: 4px solid #0d6efd;
+            background: #f0f7ff;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        @media print {
+            .btn-print, .btn-outline-primary { display: none; }
+            body { background: white; }
+            .main-header-card { background: #000 !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container result-container">
+    <div class="main-header-card text-center mb-4 shadow">
+        <span class="client-welcome"><i class="fa-solid fa-file-invoice me-2"></i>تقرير استشاري خاص بـ</span>
+        <h1 class="fw-bold mb-3">{{ client_name }}</h1>
+        
+        <div class="score-badge">
+            <span class="score-number">{{ score }}</span>
+            <span class="score-label">درجة الأمان</span>
+        </div>
+        
+        <h3 class="h5 fw-bold">حالة الملف: {{ main_reason }}</h3>
+        <div class="status-pill">تقييم الذكاء الاصطناعي</div>
+        <p class="mt-4 opacity-75 lead px-md-5 small">{{ chosen_message }}</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="info-card p-4">
+                <div class="section-icon"><i class="fa-solid fa-route fa-lg"></i></div>
+                <h4 class="fw-bold mb-3 h5">المسار السياحي المقترح لـ {{ client_name.split(' ')[0] }}</h4>
+                
+                <div class="mb-4">
+                    {% if suggestion != "لا ننصح بالتقديم حالياً" and suggestion != "لا يوجد حالياً" %}
+                        {% for country in suggestion.split(' / ') %}
+                            <span class="country-tag"><i class="fa-solid fa-passport me-1"></i> {{ country }}</span>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-danger fw-bold"><i class="fa-solid fa-triangle-exclamation me-2"></i>نوصي بتجميد التقديم حالياً والعمل على تحسين النقاط المذكورة.</p>
+                    {% endif %}
+                </div>
+
+                <div class="alert-custom mb-3">
+                    <h6 class="fw-bold mb-2"><i class="fa-solid fa-magnifying-glass-chart text-primary me-2"></i>لماذا تم اختيار هذه المسارات؟</h6>
+                    <p class="mb-0 small text-secondary lh-lg">{{ evidence }}</p>
+                </div>
+
+                <div class="p-3 bg-light border-start border-danger border-4 rounded mt-3">
+                    <h6 class="fw-bold text-danger mb-1 small"><i class="fa-solid fa-ban me-2"></i>تحذير المخاطرة:</h6>
+                    <p class="mb-0 x-small text-muted">{{ why_no }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="row g-4">
+                <div class="col-12">
+                    <div class="info-card p-4 border-top border-success border-4">
+                        <h6 class="fw-bold text-success mb-3"><i class="fa-solid fa-shield-halved me-2"></i>نقاط القوة الحالية</h6>
+                        <ul class="list-unstyled list-custom small text-muted">
+                            {% for reason in reasons %}
+                            <li><i class="fa-solid fa-circle-check text-success"></i> {{ reason }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="info-card p-4 border-top border-warning border-4">
+                        <h6 class="fw-bold text-warning mb-3"><i class="fa-solid fa-wand-magic-sparkles me-2"></i>خطة تحسين الملف</h6>
+                        <ul class="list-unstyled list-custom small text-muted">
+                            {% for item in improvement %}
+                            <li><i class="fa-solid fa-arrow-up-right-from-square text-warning"></i> {{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center gap-3 mt-5">
+        <button onclick="window.print()" class="btn btn-dark btn-print px-4 py-2">
+            <i class="fa-solid fa-download me-2"></i>تحميل التقرير (PDF)
+        </button>
+        <a href="/" class="btn btn-outline-primary btn-print px-4 py-2">
+            <i class="fa-solid fa-user-plus me-2"></i>تقييم عميل آخر
+        </a>
+    </div>
+
+    <div class="mt-5 p-4 bg-white rounded-4 shadow-sm border">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <i class="fa-solid fa-user-shield fa-2x text-secondary opacity-50"></i>
+            </div>
+            <div class="col">
+                <p class="mb-0 text-muted small lh-base">
+                    <strong>إخلاء مسؤولية:</strong> هذا التقرير تم إنشاؤه آلياً بناءً على البيانات المقدمة من الطرف الأول ({{ client_name }}). المعايير المستخدمة تحاكي لوائح "كود الفيزا الموحد" لدول الشنجن ولكنها لا تعتبر ضماناً قانونياً للقبول.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

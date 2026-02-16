@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج تقييم تأشيرة الشنجن</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #f0f2f5; padding-bottom: 50px; }
+        .main-card { background: white; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); overflow: hidden; }
+        .header-gradient { background: linear-gradient(135deg, #0d6efd, #003d99); color: white; padding: 30px; text-align: center; }
+        .section-header { background: #e9ecef; padding: 10px 20px; border-right: 5px solid #0d6efd; font-weight: bold; margin: 25px 0 15px 0; color: #0d6efd; }
+        .form-label { font-weight: 600; font-size: 0.9rem; color: #444; }
+        .btn-submit { background: linear-gradient(45deg, #0d6efd, #00d2ff); border: none; padding: 15px; font-weight: bold; font-size: 1.1rem; transition: 0.3s; }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(13, 110, 253, 0.4); }
+        .input-group-text { background-color: #f8f9fa; border-left: none; color: #0d6efd; }
+        .form-control:focus { border-color: #0d6efd; box-shadow: none; }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="main-card">
+                <div class="header-gradient">
+                    <h2 class="mb-0">🌍 محلل طلبات الشنجن الذكي</h2>
+                    <p class="mt-2 opacity-75">قم بتعبئة بياناتك بدقة للحصول على أدق تقييم قانوني لملفك</p>
+                </div>
+
+                <form action="/" method="POST" class="p-4 p-md-5">
+                    
+                    <div class="section-header">بيانات صاحب الطلب</div>
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label class="form-label">اسم العميل بالكامل</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-user-tie"></i></span>
+                                <input type="text" name="client_name" class="form-control" placeholder="أدخل الاسم الثلاثي للعميل لطباعته في التقرير" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section-header">أولاً: البيانات الشخصية والمؤهلات</div>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">العمر</label>
+                            <input type="number" name="age" class="form-control" required placeholder="مثال: 30">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">الحالة الاجتماعية</label>
+                            <select name="marital_status" class="form-select">
+                                <option value="single">أعزب</option>
+                                <option value="married">متزوج</option>
+                                <option value="divorced">مطلق / أرمل</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">عدد الأطفال</label>
+                            <input type="number" name="children" class="form-control" value="0">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">المؤهل الدراسي (في مصر)</label>
+                            <select name="education" class="form-select">
+                                <option value="high_school">دبلوم / ثانوية عامة</option>
+                                <option value="bachelor" selected>بكالوريوس / ليسانس</option>
+                                <option value="post_grad">ماجستير / دكتوراه</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">مستوى اللغة (الإنجليزية/الأوروبية)</label>
+                            <select name="language" class="form-select">
+                                <option value="none">لا أتحدث لغة أجنبية</option>
+                                <option value="basic">أساسي - A1/A2</option>
+                                <option value="intermediate" selected>متوسط - B1/B2</option>
+                                <option value="fluent">ممتاز - C1/C2</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="section-header">ثانياً: العمل والاستقرار الوظيفي</div>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">نوع الوظيفة</label>
+                            <select name="job_type" class="form-select">
+                                <option value="government">موظف حكومي</option>
+                                <option value="private">قطاع خاص (مؤمن عليه)</option>
+                                <option value="freelance">عمل حر / صاحب عمل</option>
+                                <option value="none">لا توجد وظيفة حالياً</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">مدة العمل (بالأشهر)</label>
+                            <input type="number" name="work_duration_months" class="form-control" placeholder="مثال: 24">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">الراتب الشهري (EGP)</label>
+                            <input type="number" name="salary" class="form-control" placeholder="0">
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-check form-switch mt-2">
+                                <input class="form-check-input" type="checkbox" name="has_hr_letter" value="yes" id="hrCheck" checked>
+                                <label class="form-check-label" for="hrCheck">هل يمكنك الحصول على خطاب (HR Letter)؟</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-header">ثالثاً: الملاءة المالية (البنك)</div>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">الرصيد الحالي في الحساب (EGP)</label>
+                            <input type="number" name="bank_balance" class="form-control" placeholder="مثال: 150000" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">متوسط رصيد آخر 6 أشهر</label>
+                            <input type="number" name="avg_balance_6m" class="form-control" placeholder="مثال: 100000">
+                        </div>
+                    </div>
+
+                    <div class="section-header">رابعاً: تاريخ السفر السابق</div>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">أقوى سفر قمت به سابقاً</label>
+                            <select name="travel_history_level" class="form-select">
+                                <option value="none">لم أسفر خارج مصر</option>
+                                <option value="arab">دول عربية فقط</option>
+                                <option value="asia">دول آسيوية / تركيا</option>
+                                <option value="schengen">شنجن / أمريكا / بريطانيا سابقاً</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">هل سبق لك الرفض من الشنجن؟</label>
+                            <select name="previous_refusal" class="form-select">
+                                <option value="no">لا، لم أرفض أبداً</option>
+                                <option value="yes">نعم، تم رفضي سابقاً</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="section-header">خامساً: تفاصيل الرحلة المطلوبة</div>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">الدولة المستهدفة</label>
+                            <input type="text" name="target_country" class="form-control" placeholder="مثال: فرنسا">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">مدة الرحلة (بالأيام)</label>
+                            <input type="number" name="trip_duration_days" class="form-control" value="7">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">الغرض من السفر</label>
+                            <select name="trip_purpose" class="form-select">
+                                <option value="tourism">سياحة</option>
+                                <option value="business">عمل</option>
+                                <option value="visit">زيارة عائلية</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mt-5">
+                        <button type="submit" class="btn btn-submit text-white w-100 shadow-lg">إرسال البيانات واستخراج التقرير</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
